@@ -7,6 +7,7 @@ public class Product implements Serializable {
 	private Number productId;
 	private String productName;
 	private String description;
+	private String imageURL;
 
 	public Product() {
 	}
@@ -42,10 +43,18 @@ public class Product implements Serializable {
 		this.productName = productName;
 	}
 
+	public String getImageURL() {
+		return imageURL;
+	}
+
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [productId=" + productId + ", productName=" + productName + ", description=" + description
-				+ "]";
+				+ ", imageURL=" + imageURL + "]";
 	}
 
 }
