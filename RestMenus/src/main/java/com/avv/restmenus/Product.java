@@ -18,6 +18,14 @@ public class Product implements Serializable {
 		this.productName = productName;
 		this.description = description;
 	}
+	
+	public Product(Number productId, String productName, String description, String imageURL) {
+		super();
+		this.productId = productId;
+		this.productName = productName;
+		this.description = description;
+		this.imageURL = imageURL;
+	}
 
 	public Number getProductId() {
 		return productId;

@@ -1,6 +1,5 @@
 package com.avv.restmenus;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -33,8 +32,20 @@ public class RestMenus {
 	public final static String ONTIMIZE_CONNECTION_USER = "admin";
 	public final static String ONTIMIZE_CONNECTION_PASSWORD = "angel";
 
+	private static Properties params;
+
+	static {
+		try {
+			if (params == null) {
+				params = new Properties();
+				params.load(RestMenus.class.getResourceAsStream("connection.properties"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	private ConnectionBean openConnection() {
-		Properties params = new Properties();
 		params.put(HOSTNAME, ONTIMIZE_CONNECTION_HOST);
 		params.put(PORT, ONTIMIZE_CONNECTION_PORT);
 		params.put(REMOTE_LOCATOR, ONTIMIZE_CONNECTION_LOCATOR);
@@ -66,8 +77,11 @@ public class RestMenus {
 			if (result.calculateRecordNumber() > 0) {
 				for (int i = 0; i < result.calculateRecordNumber(); i++) {
 					Hashtable res = result.getRecordValues(0);
+
+					String pImgName = (String) res.get("productImageName");
+					String imageURL = BASE_URL + pImgName;
 					products.add(new Product((Number) res.get("idProduct"), (String) res.get("productName"),
-							(String) res.get("productDescription")));
+							(String) res.get("productDescription"), imageURL));
 				}
 			}
 			return products;
@@ -173,6 +187,11 @@ public class RestMenus {
 			closeConnection(connection);
 		}
 		return result;
+	}
+	
+	public static void main(String[] args) {
+		
+		System.out.println("adsasdas");
 	}
 
 }
