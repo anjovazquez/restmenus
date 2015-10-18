@@ -34,8 +34,6 @@ import com.sun.jersey.multipart.FormDataParam;
 @Path("")
 public class RestMenus {
 
-	public final static String BASE_URL = "http://52.10.245.28:8080/static/";
-
 	@GET
 	@Path("/product")
 	@Produces({ "application/json", MediaType.APPLICATION_JSON })

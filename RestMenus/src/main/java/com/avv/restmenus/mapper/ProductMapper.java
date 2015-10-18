@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
+import com.avv.restmenus.ImageManager;
 import com.avv.restmenus.Product;
 import com.avv.restmenus.RestMenus;
 import com.ontimize.db.EntityResult;
@@ -29,7 +30,7 @@ public class ProductMapper {
 		product.setProductId((Number) productValues.get("idProduct"));
 		product.setProductName((String) productValues.get("productName"));
 		product.setDescription((String) productValues.get("productDescription"));
-		product.setImageURL(RestMenus.BASE_URL + (String) productValues.get("productImageName"));
+		product.setImageURL(ImageManager.getImageManager().getImagesPathURL() + (String) productValues.get("productImageName"));
 		return product;
 	}
 
