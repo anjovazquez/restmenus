@@ -137,20 +137,20 @@ public class RestMenus {
 	@Path("/ingredient")
 	@Produces({ "application/json", MediaType.APPLICATION_JSON })
 	public Object getIngredients() {
-		List<Allergen> allergens = new ArrayList<Allergen>();
+		List<Ingredient> ingredients = new ArrayList<Ingredient>();
 
 		try {
 			GetIngredients getIngredients = new GetIngredients();
 			EntityResult result = getIngredients.execute();
 
 			if (result.calculateRecordNumber() > 0) {
-				allergens = new AllergenMapper().transform(result);
+				ingredients = new IngredientMapper().transform(result);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return allergens;
+		return ingredients;
 	}
 
 	@POST
