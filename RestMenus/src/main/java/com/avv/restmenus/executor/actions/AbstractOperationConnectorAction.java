@@ -10,6 +10,7 @@ public abstract class AbstractOperationConnectorAction {
 		EntityResult result = null;
 		ConnectionBean connection = ConnectionManager.getConnectionManager().openConnection();
 		try {
+			connection.getSessionId();
 			result = execute(connection);
 		} catch (Exception excp) {
 			excp.printStackTrace();

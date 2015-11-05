@@ -4,6 +4,9 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import com.ontimize.db.EntityResult;
+import com.ontimize.demo.common.IBenMeSabeReferenceLocator;
+import com.ontimize.locator.EntityReferenceLocator;
+import com.ontimize.locator.ReferenceLocator;
 import com.ontimize.util.rmi.ConnectionBean;
 
 public class GetIngredientsByProduct extends AbstractOperationConnectorAction {
@@ -20,5 +23,4 @@ public class GetIngredientsByProduct extends AbstractOperationConnectorAction {
 		kv.put("idProduct", idProduct);
 		return connection.query(kv, new Vector(), "EProductIngredient");
 	}
-
 }

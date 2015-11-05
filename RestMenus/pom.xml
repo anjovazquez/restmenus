@@ -69,6 +69,18 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.ontimize</groupId>
+			<artifactId>ontimize-core</artifactId>
+			<version>5.5.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.ontimize</groupId>
+			<artifactId>demo-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
