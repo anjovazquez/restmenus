@@ -248,12 +248,15 @@ public class RestMenus {
 	public Response postOrder(Order order){
 		try {
 			PostOrder postOrder = new PostOrder(order);
-			postOrder.execute();
+			EntityResult result = postOrder.execute();
+			if(result.getCode()==EntityResult.OPERATION_SUCCESSFUL){
+				Response.status(200).entity("Generated").build();
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Response.status(200).entity("Generated").build();
+		return Response.status(500).entity("Error registering order").build();
 	}
 
 	@POST
