@@ -67,12 +67,6 @@
 			<artifactId>ontimize-core</artifactId>
 			<version>5.5.1</version>
 		</dependency>
-
-		<dependency>
-			<groupId>com.ontimize</groupId>
-			<artifactId>ontimize-core</artifactId>
-			<version>5.5.1</version>
-		</dependency>
 		
 		<dependency>
 			<groupId>com.ontimize</groupId>
@@ -114,6 +108,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
 				<configuration>
 					<webXml>src\main\resources\webapp\WEB-INF\web.xml</webXml>
 				</configuration>

@@ -19,13 +19,20 @@ import javax.ws.rs.core.Response;
 
 import com.avv.restmenus.executor.actions.GetAllergens;
 import com.avv.restmenus.executor.actions.GetAllergensByProduct;
+import com.avv.restmenus.executor.actions.GetCompanies;
+import com.avv.restmenus.executor.actions.GetCompanyMenu;
 import com.avv.restmenus.executor.actions.GetIngredients;
 import com.avv.restmenus.executor.actions.GetIngredientsByProduct;
+import com.avv.restmenus.executor.actions.GetMenus;
 import com.avv.restmenus.executor.actions.GetProduct;
+import com.avv.restmenus.executor.actions.GetProductMenu;
 import com.avv.restmenus.executor.actions.GetProducts;
+import com.avv.restmenus.executor.actions.PostOrder;
 import com.avv.restmenus.executor.actions.PostProductSimple;
 import com.avv.restmenus.mapper.AllergenMapper;
+import com.avv.restmenus.mapper.CompanyMapper;
 import com.avv.restmenus.mapper.IngredientMapper;
+import com.avv.restmenus.mapper.MenuMapper;
 import com.avv.restmenus.mapper.ProductMapper;
 import com.ontimize.db.EntityResult;
 import com.sun.jersey.core.header.FormDataContentDisposition;
@@ -151,6 +158,102 @@ public class RestMenus {
 		}
 
 		return ingredients;
+	}
+	
+	@GET
+	@Path("/menu")
+	@Produces({ "application/json", MediaType.APPLICATION_JSON })
+	public Object getMenus() {
+		List<Menu> menus = new ArrayList<Menu>();
+
+		try {
+			GetMenus getMenus = new GetMenus();
+			EntityResult result = getMenus.execute();
+
+			if (result.calculateRecordNumber() > 0) {
+				menus = new MenuMapper().transform(result);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return menus;
+	}
+	
+	@GET
+	@Path("/company")
+	@Produces({ "application/json", MediaType.APPLICATION_JSON })
+	public Object getCompanies() {
+		List<Company> companies = new ArrayList<Company>();
+
+		try {
+			GetCompanies getCompanies = new GetCompanies();
+			EntityResult result = getCompanies.execute();
+
+			if (result.calculateRecordNumber() > 0) {
+				companies = new CompanyMapper().transform(result);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return companies;
+	}
+	
+	@GET
+	@Path("/company/{idCompany}/menu")
+	@Produces({ "application/json", MediaType.APPLICATION_JSON })
+	public Object getCompanyMenus(@PathParam("idCompany") String idCompany) {
+		List<Menu> menus = new ArrayList<Menu>();
+
+		try {
+			GetCompanyMenu getCompanyMenus = new GetCompanyMenu();
+			EntityResult result = getCompanyMenus.execute();
+
+			if (result.calculateRecordNumber() > 0) {
+				menus = new MenuMapper().transform(result);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return menus;
+	}
+	
+	@GET
+	@Path("/menu/{idMenu}/product")
+	@Produces({ "application/json", MediaType.APPLICATION_JSON })
+	public Object getMenuProducts(@PathParam("idMenu") String idMenu) {
+		List<Product> productsMenu = new ArrayList<Product>();
+
+		try {
+			GetProductMenu getProductMenus = new GetProductMenu();
+			EntityResult result = getProductMenus.execute();
+
+			if (result.calculateRecordNumber() > 0) {
+				productsMenu = new ProductMapper().transform(result);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return productsMenu;
+	}
+	
+	
+	@GET
+	@Path("/order")
+	@Consumes({ "application/json", MediaType.APPLICATION_JSON })
+	@Produces({ "application/json", MediaType.APPLICATION_JSON })
+	public Response postOrder(Order order){
+		try {
+			PostOrder postOrder = new PostOrder(order);
+			postOrder.execute();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Response.status(200).entity("Generated").build();
 	}
 
 	@POST
