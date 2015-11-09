@@ -24,15 +24,18 @@ import com.avv.restmenus.executor.actions.GetCompanyMenu;
 import com.avv.restmenus.executor.actions.GetIngredients;
 import com.avv.restmenus.executor.actions.GetIngredientsByProduct;
 import com.avv.restmenus.executor.actions.GetMenus;
+import com.avv.restmenus.executor.actions.GetOrders;
 import com.avv.restmenus.executor.actions.GetProduct;
 import com.avv.restmenus.executor.actions.GetProductMenu;
 import com.avv.restmenus.executor.actions.GetProducts;
+import com.avv.restmenus.executor.actions.PostCustomerRequest;
 import com.avv.restmenus.executor.actions.PostOrder;
 import com.avv.restmenus.executor.actions.PostProductSimple;
 import com.avv.restmenus.mapper.AllergenMapper;
 import com.avv.restmenus.mapper.CompanyMapper;
 import com.avv.restmenus.mapper.IngredientMapper;
 import com.avv.restmenus.mapper.MenuMapper;
+import com.avv.restmenus.mapper.OrderMapper;
 import com.avv.restmenus.mapper.ProductMapper;
 import com.ontimize.db.EntityResult;
 import com.sun.jersey.core.header.FormDataContentDisposition;
@@ -240,11 +243,44 @@ public class RestMenus {
 		return productsMenu;
 	}
 	
-	
 	@GET
 	@Path("/order")
-	@Consumes({ "application/json", MediaType.APPLICATION_JSON })
 	@Produces({ "application/json", MediaType.APPLICATION_JSON })
+	public Object getOrders(){
+		List<Order> orders = new ArrayList<Order>();
+		try {
+			GetOrders getOrders = new GetOrders();
+			EntityResult result = getOrders.execute();
+
+			if (result.calculateRecordNumber() > 0) {
+				orders = new OrderMapper().transform(result);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return orders;
+	}
+	
+	@POST
+	@Path("/customer/request")
+	@Consumes({ "application/json", MediaType.APPLICATION_JSON })
+	public Response postOrder(CustomerRequest customerRequest){
+		try {
+			PostCustomerRequest postCustomerRequest = new PostCustomerRequest(customerRequest);
+			EntityResult result = postCustomerRequest.execute();
+			if(result.getCode()==EntityResult.OPERATION_SUCCESSFUL){
+				Response.status(200).entity("Generated").build();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Response.status(201).entity("Error registering order").build();
+	}
+	
+	@POST
+	@Path("/order")
+	@Consumes({ "application/json", MediaType.APPLICATION_JSON })
 	public Response postOrder(Order order){
 		try {
 			PostOrder postOrder = new PostOrder(order);
@@ -256,7 +292,7 @@ public class RestMenus {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Response.status(500).entity("Error registering order").build();
+		return Response.status(201).entity("Error registering order").build();
 	}
 
 	@POST

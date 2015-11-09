@@ -6,34 +6,30 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Hashtable;
 
+import com.avv.restmenus.CustomerRequest;
 import com.avv.restmenus.Order;
 import com.avv.restmenus.Product;
 import com.ontimize.db.EntityResult;
 import com.ontimize.util.remote.BytesBlock;
 import com.ontimize.util.rmi.ConnectionBean;
 
-public class PostOrder extends AbstractOperationConnectorAction {
+public class PostCustomerRequest extends AbstractOperationConnectorAction {
 
-	private Order order;
+	private CustomerRequest request;
 	
-	public PostOrder(Order order) {
-		this.order = order;
+	public PostCustomerRequest(CustomerRequest request) {
+		this.request = request;
 	}
 
 	@Override
 	public EntityResult execute(ConnectionBean connection) throws Exception {
 		
 		Hashtable kv = new Hashtable();
-		kv.put("tableNo", order.getTableNo());
-		kv.put("name", order.getOrderName());
+		kv.put("tableNo", request.getTableNo());
+		kv.put("requestType", request.getType());
+		//kv.put("idCompany", request.getOrderName());
 		
-		connection.insert(kv, "EOrder");
-		
-		for(Product product:order.getProductList()){
-			kv.clear();
-			kv.put("idProduct", product.getProductId());
-			connection.insert(kv, "EOrderProduct");
-		}
+		connection.insert(kv, "ECustomerRequest");
 		
 		EntityResult result = new EntityResult();
 		result.setCode(EntityResult.OPERATION_SUCCESSFUL);
