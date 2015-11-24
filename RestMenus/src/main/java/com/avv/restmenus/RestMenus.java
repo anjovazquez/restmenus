@@ -286,7 +286,7 @@ public class RestMenus {
 			PostOrder postOrder = new PostOrder(order);
 			EntityResult result = postOrder.execute();
 			if(result.getCode()==EntityResult.OPERATION_SUCCESSFUL){
-				Response.status(200).entity("Generated").build();
+				return Response.status(200).entity("Generated").build();
 			}
 			
 		} catch (Exception e) {
