@@ -23,6 +23,7 @@ public class PostOrder extends AbstractOperationConnectorAction {
 		kv.put("tableNo", order.getTableNo());
 		kv.put("orderName", order.getOrderName());
 		kv.put("orderDate", new Date());
+		kv.put("customerToken", order.getCustomerToken());
 //		kv.put("idCompany", 1);
 
 		EntityResult resOrderReg = connection.insert(kv, "EOrder");
@@ -37,9 +38,9 @@ public class PostOrder extends AbstractOperationConnectorAction {
 			}
 		}
 
-		EntityResult result = new EntityResult();
-		result.setCode(EntityResult.OPERATION_SUCCESSFUL);
-		return result;
+//		EntityResult result = new EntityResult();
+//		result.setCode(EntityResult.OPERATION_SUCCESSFUL);
+		return resOrderReg;
 	}
 
 }

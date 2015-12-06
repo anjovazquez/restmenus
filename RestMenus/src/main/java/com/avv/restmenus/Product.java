@@ -1,6 +1,7 @@
 package com.avv.restmenus;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class Product implements Serializable {
 
@@ -8,6 +9,8 @@ public class Product implements Serializable {
 	private String productName;
 	private String description;
 	private String imageURL;
+	private String productSection;
+	private Number productPrice;
 
 	public Product() {
 	}
@@ -59,10 +62,30 @@ public class Product implements Serializable {
 		this.imageURL = imageURL;
 	}
 
+	public String getProductSection() {
+		return productSection;
+	}
+
+	public void setProductSection(String productSection) {
+		this.productSection = productSection;
+	}
+
+	public Number getProductPrice() {
+		return productPrice;
+	}
+
+	public void setProductPrice(Number productPrice) {
+		this.productPrice = productPrice;
+	}
+
 	@Override
 	public String toString() {
-		return "Product [productId=" + productId + ", productName=" + productName + ", description=" + description
-				+ ", imageURL=" + imageURL + "]";
+		return "Product [productId=" + productId + ", productName="
+				+ productName + ", description=" + description + ", imageURL="
+				+ imageURL + ", productSection=" + productSection
+				+ ", productPrice=" + productPrice + "]";
 	}
+	
+	
 
 }

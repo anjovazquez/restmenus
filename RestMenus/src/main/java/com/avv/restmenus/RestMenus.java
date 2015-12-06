@@ -264,35 +264,36 @@ public class RestMenus {
 	@POST
 	@Path("/customer/request")
 	@Consumes({ "application/json", MediaType.APPLICATION_JSON })
-	public Response postOrder(CustomerRequest customerRequest){
+	public Object postCustomerRequest(CustomerRequest customerRequest){
 		try {
 			PostCustomerRequest postCustomerRequest = new PostCustomerRequest(customerRequest);
 			EntityResult result = postCustomerRequest.execute();
 			if(result.getCode()==EntityResult.OPERATION_SUCCESSFUL){
-				Response.status(200).entity("Generated").build();
+				return result.get("idCustomerRequest");
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Response.status(201).entity("Error registering order").build();
+		return null;
 	}
 	
 	@POST
 	@Path("/order")
 	@Consumes({ "application/json", MediaType.APPLICATION_JSON })
-	public Response postOrder(Order order){
+	@Produces({ "application/json", MediaType.APPLICATION_JSON })
+	public Order postOrder(Order order){
 		try {
 			PostOrder postOrder = new PostOrder(order);
 			EntityResult result = postOrder.execute();
 			if(result.getCode()==EntityResult.OPERATION_SUCCESSFUL){
-				return Response.status(200).entity("Generated").build();
-			}
-			
+				order.setIdOrder((Number)result.get("idOrder"));
+				return order;
+			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Response.status(201).entity("Error registering order").build();
+		return order;
 	}
 
 	@POST

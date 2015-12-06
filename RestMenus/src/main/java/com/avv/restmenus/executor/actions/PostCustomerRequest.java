@@ -27,12 +27,10 @@ public class PostCustomerRequest extends AbstractOperationConnectorAction {
 		Hashtable kv = new Hashtable();
 		kv.put("tableNo", request.getTableNo());
 		kv.put("type", request.getType());
+		kv.put("customerToken", request.getCustomerToken());
 		//kv.put("idCompany", request.getOrderName());
 		
-		connection.insert(kv, "ECustomerRequest");
-		
-		EntityResult result = new EntityResult();
-		result.setCode(EntityResult.OPERATION_SUCCESSFUL);
+		EntityResult result = connection.insert(kv, "ECustomerRequest");
 		return result;
 	}
 
